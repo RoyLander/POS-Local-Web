@@ -1,0 +1,215 @@
+/* =========================================================
+   POS Local - Navegación segura
+   Conserva las barras y acciones propias de cada pantalla.
+   ========================================================= */
+
+:root {
+    --pos-nav-height: 56px;
+    --pos-breadcrumb-height: 38px;
+    --pos-header-total-height: 94px;
+    --pos-screen-gap: 10px;
+}
+
+#navegacionPrincipal {
+    position: relative;
+    z-index: 1050;
+    flex: 0 0 auto;
+}
+
+/*
+ * IMPORTANTE:
+ * No se ocultan las barras antiguas porque algunas contienen
+ * acciones funcionales, como "Nuevo producto".
+ */
+body.navegacion-unificada > nav.navbar:not(.pos-global-nav),
+body.navegacion-unificada .app-shell > nav.navbar:not(.pos-global-nav) {
+    display: flex !important;
+}
+
+/* Las barras propias pasan a funcionar como barra de acciones secundaria. */
+body.navegacion-unificada > nav.navbar:not(.pos-global-nav),
+body.navegacion-unificada .app-shell > nav.navbar:not(.pos-global-nav) {
+    min-height: 44px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Evita repetir demasiado protagonismo del nombre de sistema. */
+body.navegacion-unificada > nav.navbar:not(.pos-global-nav) .navbar-brand,
+body.navegacion-unificada .app-shell > nav.navbar:not(.pos-global-nav) .navbar-brand {
+    font-size: 0.95rem;
+}
+
+/*
+ * Altura total:
+ * 56 navegación principal
+ * 38 breadcrumb
+ * 44 barra secundaria de la pantalla
+ */
+body.navegacion-unificada {
+    --pos-screen-header-total: 138px;
+}
+
+html,
+body.app-screen,
+body.pos-screen {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body.app-screen.navegacion-unificada,
+body.pos-screen.navegacion-unificada {
+    overflow: hidden;
+}
+
+body.navegacion-unificada .pos-main,
+body.navegacion-unificada .productos-main,
+body.navegacion-unificada .inventario-main,
+body.navegacion-unificada .ventas-main,
+body.navegacion-unificada .caja-main,
+body.navegacion-unificada .herramientas-main {
+    height: calc(100vh - var(--pos-screen-header-total, 138px));
+    min-height: 0;
+    padding: 10px 12px 12px;
+    overflow: hidden;
+}
+
+body.navegacion-unificada .productos-main,
+body.navegacion-unificada .inventario-main,
+body.navegacion-unificada .ventas-main,
+body.navegacion-unificada .caja-main,
+body.navegacion-unificada .herramientas-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pos-screen-gap);
+}
+
+body.navegacion-unificada .pos-main > .row,
+body.navegacion-unificada .pos-column,
+body.navegacion-unificada .pos-list-card,
+body.navegacion-unificada .pos-table-scroll,
+body.navegacion-unificada .productos-card,
+body.navegacion-unificada .inventario-card,
+body.navegacion-unificada .ventas-card,
+body.navegacion-unificada .herramientas-resultados {
+    min-height: 0;
+}
+
+body.navegacion-unificada .pos-main > .row {
+    height: 100%;
+}
+
+body.navegacion-unificada .productos-filtros,
+body.navegacion-unificada .productos-resumen,
+body.navegacion-unificada .inventario-filtros,
+body.navegacion-unificada .inventario-resumen,
+body.navegacion-unificada .ventas-filtros,
+body.navegacion-unificada .ventas-resumen,
+body.navegacion-unificada .caja-resumen,
+body.navegacion-unificada .caja-acciones,
+body.navegacion-unificada .herramientas-acciones,
+body.navegacion-unificada .herramientas-resumen {
+    flex: 0 0 auto;
+}
+
+body.navegacion-unificada .productos-card,
+body.navegacion-unificada .inventario-card,
+body.navegacion-unificada .ventas-card,
+body.navegacion-unificada .herramientas-resultados {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+body.navegacion-unificada .caja-contenido {
+    flex: 1 1 0;
+    min-height: 0;
+}
+
+body.navegacion-unificada .caja-contenido > div,
+body.navegacion-unificada .caja-contenido .card {
+    min-height: 0;
+}
+
+body.navegacion-unificada .caja-contenido .card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+body.navegacion-unificada .pos-table-scroll,
+body.navegacion-unificada .productos-scroll,
+body.navegacion-unificada .inventario-scroll,
+body.navegacion-unificada .caja-movimientos-scroll,
+body.navegacion-unificada .productos-card .table-responsive,
+body.navegacion-unificada .productos-card .app-scroll,
+body.navegacion-unificada .inventario-card .table-responsive,
+body.navegacion-unificada .inventario-card .app-scroll,
+body.navegacion-unificada .ventas-card .table-responsive,
+body.navegacion-unificada .ventas-card .app-scroll,
+body.navegacion-unificada .caja-contenido .table-responsive,
+body.navegacion-unificada .herramientas-resultados .app-scroll,
+body.navegacion-unificada .herramientas-resultados .table-responsive {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
+body.navegacion-unificada .productos-card table {
+    min-width: 980px;
+    margin-bottom: 0;
+}
+
+body.navegacion-unificada .inventario-card table {
+    min-width: 1040px;
+    margin-bottom: 0;
+}
+
+body.navegacion-unificada .ventas-card table {
+    min-width: 1080px;
+    margin-bottom: 0;
+}
+
+body.navegacion-unificada .table-responsive thead th,
+body.navegacion-unificada .app-scroll thead th,
+body.navegacion-unificada .pos-table-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    background: #ffffff;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 991.98px) {
+    body.app-screen.navegacion-unificada,
+    body.pos-screen.navegacion-unificada {
+        overflow: auto;
+    }
+
+    body.navegacion-unificada .pos-main,
+    body.navegacion-unificada .productos-main,
+    body.navegacion-unificada .inventario-main,
+    body.navegacion-unificada .ventas-main,
+    body.navegacion-unificada .caja-main,
+    body.navegacion-unificada .herramientas-main {
+        height: auto;
+        min-height: calc(100vh - 170px);
+        overflow: visible;
+    }
+
+    body.navegacion-unificada .productos-card,
+    body.navegacion-unificada .inventario-card,
+    body.navegacion-unificada .ventas-card,
+    body.navegacion-unificada .herramientas-resultados {
+        min-height: 520px;
+    }
+
+    body.navegacion-unificada .caja-contenido .card {
+        min-height: 420px;
+    }
+}

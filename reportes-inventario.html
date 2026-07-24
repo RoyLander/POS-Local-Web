@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>POS Local - Reportes de inventario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/navegacion.css">
+    <link rel="stylesheet" href="css/reportesInventario.css">
+</head>
+<body class="app-screen">
+    <div id="navegacionPrincipal"></div>
+
+    <div id="contenedorMensajes"
+         class="position-fixed top-0 start-50 translate-middle-x mt-3"
+         style="z-index:3000;width:min(520px,92%);"></div>
+
+    <main class="container-fluid reportes-main">
+
+        <section class="card sombra reportes-filtros">
+            <div class="card-header">
+                <i class="bi bi-funnel"></i>
+                Reportes de inventario
+            </div>
+
+            <div class="card-body">
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-lg-4">
+                        <label for="txtBuscarReporte" class="form-label">
+                            Buscar producto
+                        </label>
+
+                        <input id="txtBuscarReporte"
+                               type="text"
+                               class="form-control"
+                               placeholder="SKU, código, descripción, marca, color o talle">
+                    </div>
+
+                    <div class="col-lg-3">
+                        <label for="cmbEstadoStock" class="form-label">
+                            Estado de stock
+                        </label>
+
+                        <select id="cmbEstadoStock" class="form-select">
+                            <option value="">Todos</option>
+                            <option value="SIN_STOCK">Sin stock</option>
+                            <option value="STOCK_BAJO">Stock bajo</option>
+                            <option value="STOCK_NORMAL">Stock normal</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <button id="btnLimpiarReporte"
+                                type="button"
+                                class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-eraser"></i>
+                            Limpiar
+                        </button>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <button id="btnExportarReporte"
+                                type="button"
+                                class="btn btn-success w-100">
+                            <i class="bi bi-file-earmark-spreadsheet"></i>
+                            Exportar CSV
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="row g-3 reportes-resumen">
+            <div class="col-md-2">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Productos</small>
+                        <h4 id="lblReporteProductos">0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Unidades</small>
+                        <h4 id="lblReporteUnidades" class="text-primary">0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Sin stock</small>
+                        <h4 id="lblReporteSinStock" class="text-danger">0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Stock bajo</small>
+                        <h4 id="lblReporteStockBajo" class="text-warning">0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Valor costo</small>
+                        <h4 id="lblReporteValorCosto" class="reportes-importe">$ 0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Valor venta</small>
+                        <h4 id="lblReporteValorVenta" class="reportes-importe text-success">$ 0</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card sombra reportes-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>
+                    <i class="bi bi-table"></i>
+                    Inventario valorizado
+                </span>
+
+                <small id="lblEstadoReporte" class="text-muted">
+                    Listo
+                </small>
+            </div>
+
+            <div class="table-responsive reportes-scroll">
+                <table class="table table-hover table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Descripción</th>
+                            <th>Marca</th>
+                            <th>Color</th>
+                            <th>Talle</th>
+                            <th class="text-end">Stock</th>
+                            <th class="text-end">Mínimo</th>
+                            <th class="text-end">Costo</th>
+                            <th class="text-end">Venta</th>
+                            <th class="text-end">Valor costo</th>
+                            <th class="text-end">Valor venta</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaReporteInventario">
+                        <tr>
+                            <td colspan="12" class="text-center text-muted">
+                                Cargando productos...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js?v=0.23.0-RC1.1"></script>
+    <script src="js/api.js?v=0.23.0-RC1.1"></script><script src="js/seguridad.js?v=0.23.0-RC1.1"></script>
+    <script src="js/mensajes.js"></script>
+    <script src="js/navegacion.js?v=0.23.0-RC1.1"></script>
+    <script src="js/reportesInventario.js"></script>
+</body>
+</html>

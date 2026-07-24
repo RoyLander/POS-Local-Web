@@ -1,0 +1,38 @@
+.ventas-main {
+    padding: 12px;
+    gap: 12px;
+}
+
+.ventas-filtros,
+.ventas-resumen {
+    flex: 0 0 auto;
+}
+
+.ventas-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.ventas-card .card-header {
+    flex: 0 0 auto;
+}
+
+#tablaVentas td {
+    vertical-align: middle;
+}
+
+#tablaVentas th,
+#tablaVentas td {
+    white-space: nowrap;
+}
+
+@media (max-width: 991.98px) {
+    .ventas-main {
+        gap: 10px;
+    }
+
+    .ventas-card {
+        min-height: 420px;
+    }
+}

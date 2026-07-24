@@ -1,0 +1,43 @@
+.inventario-main {
+    padding: 12px;
+    gap: 12px;
+}
+
+.inventario-filtros,
+.inventario-resumen {
+    flex: 0 0 auto;
+}
+
+.inventario-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.inventario-card .card-header {
+    flex: 0 0 auto;
+}
+
+#tablaInventario td {
+    vertical-align: middle;
+}
+
+#tablaInventario th,
+#tablaInventario td {
+    white-space: nowrap;
+}
+
+#tablaInventario td:nth-child(3) {
+    min-width: 240px;
+    white-space: normal;
+}
+
+@media (max-width: 991.98px) {
+    .inventario-main {
+        gap: 10px;
+    }
+
+    .inventario-card {
+        min-height: 420px;
+    }
+}

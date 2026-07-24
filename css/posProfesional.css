@@ -1,0 +1,498 @@
+/* =========================================================
+   POS Local - Punto de venta profesional
+   Corrección de grillas y carrito
+   ========================================================= */
+
+body.pos-screen {
+    overflow: hidden;
+}
+
+.pos-main {
+    height: calc(100vh - var(--pos-header-total-height, 94px));
+    min-height: 0;
+    padding: 10px 12px 12px;
+}
+
+.pos-main > .row {
+    min-height: 0;
+}
+
+.pos-column {
+    min-width: 0;
+    min-height: 0;
+}
+
+.pos-list-card {
+    min-width: 0;
+    min-height: 0;
+}
+
+.pos-table-scroll {
+    min-width: 0;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
+/* Resultados de búsqueda: puede desplazarse horizontalmente
+   solamente cuando realmente no entra el contenido. */
+.pos-products-scroll {
+    overflow-x: auto;
+}
+
+.pos-products-table {
+    min-width: 640px;
+    margin-bottom: 0;
+}
+
+/* Carrito: debe ajustarse siempre al ancho del panel. */
+.pos-cart-scroll {
+    overflow-x: hidden;
+}
+
+.pos-cart-table {
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 0;
+    table-layout: fixed;
+}
+
+.pos-cart-table th,
+.pos-cart-table td {
+    vertical-align: middle;
+}
+
+.pos-cart-table th:nth-child(1),
+.pos-cart-table td:nth-child(1) {
+    width: 42%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.pos-cart-table th:nth-child(2),
+.pos-cart-table td:nth-child(2) {
+    width: 27%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.pos-cart-table th:nth-child(3),
+.pos-cart-table td:nth-child(3) {
+    width: 21%;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.pos-cart-table th:nth-child(4),
+.pos-cart-table td:nth-child(4) {
+    width: 10%;
+    min-width: 42px;
+    padding-left: 4px;
+    padding-right: 6px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.pos-cart-table td:nth-child(4) .btn {
+    width: 34px;
+    height: 32px;
+    padding: 3px 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Evita que los botones + y - ensanchen la columna. */
+.pos-cart-table td:nth-child(2) .btn {
+    min-width: 30px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.pos-cart-table td:nth-child(2) .mx-2 {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}
+
+/* Limita textos largos y permite que la descripción use dos líneas. */
+.pos-cart-table td:first-child strong,
+.pos-cart-table td:first-child small {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pos-cart-table td:first-child strong {
+    white-space: normal;
+    line-height: 1.2;
+}
+
+.pos-cart-table td:first-child small {
+    margin-top: 2px;
+    white-space: nowrap;
+    color: #6c757d;
+}
+
+.pos-payment-card {
+    border: 1px solid rgba(13, 110, 253, 0.18);
+}
+
+.pos-payment-card #lblTotal {
+    font-size: 2rem;
+}
+
+@media (max-width: 1199.98px) {
+    .pos-cart-table th:nth-child(1),
+    .pos-cart-table td:nth-child(1) {
+        width: 38%;
+    }
+
+    .pos-cart-table th:nth-child(2),
+    .pos-cart-table td:nth-child(2) {
+        width: 30%;
+    }
+
+    .pos-cart-table th:nth-child(3),
+    .pos-cart-table td:nth-child(3) {
+        width: 22%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    body.pos-screen {
+        overflow: auto;
+    }
+
+    .pos-main {
+        height: auto;
+        min-height: calc(100vh - 132px);
+    }
+
+    .pos-main > .row {
+        flex-wrap: wrap !important;
+    }
+
+    .pos-column {
+        width: 100%;
+        height: auto !important;
+    }
+
+    .pos-list-card {
+        min-height: 380px;
+    }
+
+    .pos-cart-table th:nth-child(1),
+    .pos-cart-table td:nth-child(1) {
+        width: 44%;
+    }
+
+    .pos-cart-table th:nth-child(2),
+    .pos-cart-table td:nth-child(2) {
+        width: 25%;
+    }
+
+    .pos-cart-table th:nth-child(3),
+    .pos-cart-table td:nth-child(3) {
+        width: 21%;
+    }
+}
+
+.pago-fila { border:1px solid #dee2e6; border-radius:.5rem; padding:.5rem; background:#fff; }
+.pago-fila .form-label { font-size:.75rem; margin-bottom:.15rem; color:#6c757d; }
+
+/* v0.19.4: el área de cobro no debe desplazar los comandos fuera de pantalla. */
+.pos-payment-card {
+    min-height: 0;
+    max-height: min(48vh, 440px);
+    display: flex;
+    flex-direction: column;
+}
+
+.pos-payment-card > .card-body {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.pos-payment-card .pos-payments-section {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+#listaPagos {
+    min-height: 0;
+    max-height: 175px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+    scrollbar-gutter: stable;
+}
+
+.pos-payment-summary,
+.pos-payment-actions,
+.pos-payment-shortcuts,
+.pos-payment-total {
+    flex: 0 0 auto;
+}
+
+@media (max-height: 820px) and (min-width: 992px) {
+    .pos-payment-card {
+        max-height: min(52vh, 390px);
+    }
+
+    #listaPagos {
+        max-height: 125px;
+    }
+
+    .pos-payment-card #lblTotal {
+        font-size: 1.6rem;
+        margin-bottom: .2rem !important;
+    }
+
+    .pos-payment-card .card-body {
+        padding: .65rem;
+    }
+}
+
+
+/* v0.19.5: jerarquía de importes y comandos siempre visibles. */
+.pos-dashboard {
+    gap: .5rem;
+}
+
+.pos-dashboard .card-body {
+    padding: .3rem .5rem !important;
+}
+
+.pos-dashboard small {
+    font-size: .68rem;
+    line-height: 1;
+}
+
+.pos-dashboard h4 {
+    margin: .08rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.05;
+}
+
+.pos-payment-card {
+    max-height: 360px;
+}
+
+.pos-payment-card > .card-body {
+    padding: .55rem .65rem;
+}
+
+.pos-payment-card #lblTotal {
+    font-size: 1.55rem;
+    line-height: 1;
+    margin-bottom: .15rem !important;
+    color: var(--bs-primary);
+}
+
+.pos-payment-card hr {
+    margin: .25rem 0 .4rem !important;
+}
+
+.pos-payment-card .pos-payments-section {
+    margin-bottom: .35rem !important;
+}
+
+.pos-payment-card .pos-payments-section > .d-flex {
+    margin-bottom: .3rem !important;
+}
+
+#listaPagos {
+    max-height: 150px;
+    gap: .3rem !important;
+}
+
+.pago-fila {
+    padding: .3rem !important;
+}
+
+.pago-fila .row {
+    --bs-gutter-x: .35rem;
+    --bs-gutter-y: .15rem;
+}
+
+.pago-fila .form-label {
+    font-size: .63rem;
+    line-height: 1;
+    margin-bottom: .1rem !important;
+}
+
+.pago-fila .form-select-sm,
+.pago-fila .form-control-sm {
+    min-height: 27px;
+    padding-top: .15rem;
+    padding-bottom: .15rem;
+    font-size: .78rem;
+}
+
+.pago-fila [id^="pagoCalculado"] {
+    font-size: .66rem !important;
+    line-height: 1.05;
+    margin-top: .12rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pos-payment-summary {
+    padding: .3rem .5rem !important;
+    margin-bottom: .4rem !important;
+    font-size: .78rem;
+    line-height: 1.2;
+}
+
+.pos-payment-summary .fs-5 {
+    font-size: .95rem !important;
+}
+
+.pos-payment-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .45rem;
+}
+
+.pos-payment-actions .btn {
+    min-height: 32px;
+    padding: .25rem .45rem;
+    font-size: .78rem;
+    white-space: nowrap;
+}
+
+.pos-payment-shortcuts {
+    margin-top: .25rem !important;
+    line-height: 1;
+}
+
+.pos-payment-shortcuts small {
+    font-size: .64rem;
+}
+
+@media (max-height: 820px) and (min-width: 992px) {
+    .pos-main {
+        padding-top: 6px;
+        padding-bottom: 7px;
+    }
+
+    .pos-column {
+        gap: .45rem !important;
+    }
+
+    .pos-payment-card {
+        max-height: 292px;
+    }
+
+    #listaPagos {
+        max-height: 82px;
+    }
+}
+
+
+/* v0.19.6: saldo de venta claramente identificado */
+.pos-sale-balance {
+    min-height: 42px;
+    gap: .75rem;
+}
+
+.pos-sale-balance .fw-semibold {
+    line-height: 1.05;
+}
+
+.pos-sale-balance small {
+    display: block;
+    line-height: 1;
+}
+
+.pos-sale-balance #lblTotal {
+    white-space: nowrap;
+}
+
+/* v0.19.7: controles compactos de descuento y mayor área visible de pagos */
+.pago-descuento-check {
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    padding-left: 1.35rem;
+    white-space: nowrap;
+}
+.pago-descuento-check .form-check-input {
+    margin-top: 0;
+}
+.pago-descuento-check .form-check-label {
+    font-size: .72rem;
+    line-height: 1.05;
+}
+@media (max-height: 760px) {
+    .pos-payment-card { max-height: 345px; }
+    #listaPagos { max-height: 135px; }
+}
+
+/* v0.20.0: distribución asistida de pagos y estado operativo */
+.pos-payment-card {
+    max-height: 390px;
+}
+
+#listaPagos {
+    max-height: 185px;
+}
+
+.pago-fila {
+    padding: .28rem .35rem !important;
+}
+
+.pago-fila .row {
+    --bs-gutter-x: .3rem;
+    --bs-gutter-y: .12rem;
+}
+
+.btn-completar-saldo {
+    padding-left: .42rem;
+    padding-right: .42rem;
+}
+
+.pos-payment-status {
+    margin-top: .28rem;
+    padding: .22rem .4rem;
+    border-radius: .3rem;
+    font-size: .72rem;
+    line-height: 1.1;
+}
+
+.pos-payment-status.is-pending {
+    color: #8a4b08;
+    background: #fff3cd;
+    border: 1px solid #ffecb5;
+}
+
+.pos-payment-status.is-complete {
+    color: #0f5132;
+    background: #d1e7dd;
+    border: 1px solid #badbcc;
+}
+
+.pos-payment-actions .btn:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+@media (max-height: 820px) and (min-width: 992px) {
+    .pos-payment-card {
+        max-height: 345px;
+    }
+
+    #listaPagos {
+        max-height: 140px;
+    }
+}
+
+.pos-process-overlay{position:fixed;inset:0;z-index:2100;background:rgba(15,23,42,.30);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(1px)}
+.pos-process-overlay.d-none{display:none!important}
+.pos-process-card{display:flex;align-items:center;gap:.85rem;background:#fff;border-radius:.75rem;padding:1rem 1.25rem;box-shadow:0 1rem 2.5rem rgba(0,0,0,.2);min-width:280px;justify-content:center}

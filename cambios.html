@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <title>
+      POS Local - Cambios
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet"/>
+    <link href="css/estilos.css" rel="stylesheet"/>
+    <link href="css/navegacion.css" rel="stylesheet"/>
+    <link href="css/cambios.css?v=0.23.0-RC1.1" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="navegacionPrincipal">
+    </div>
+    <div class="position-fixed top-0 start-50 translate-middle-x mt-3" id="contenedorMensajes" style="z-index:4000;width:min(600px,92%)">
+    </div>
+    <main class="container-fluid py-3">
+      <div class="row g-3">
+        <div class="col-xl-8">
+          <div class="card shadow-sm">
+            <div class="card-header p-0">
+              <ul class="nav nav-tabs card-header-tabs px-3 pt-2" id="tabsCambio">
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-target="#pasoVenta" data-bs-toggle="tab" data-paso="1">
+                    <span class="numero-paso">
+                      1
+                    </span>
+                    <span>
+                      Venta
+                    </span>
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-target="#pasoRecibidos" data-bs-toggle="tab" data-paso="2">
+                    <span class="numero-paso">
+                      2
+                    </span>
+                    <span>
+                      Recibe el local
+                    </span>
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-target="#pasoEntregados" data-bs-toggle="tab" data-paso="3">
+                    <span class="numero-paso">
+                      3
+                    </span>
+                    <span>
+                      Entrega al cliente
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body tab-content panel-cambio">
+              <section class="tab-pane fade show active" id="pasoVenta">
+                <div class="row g-2">
+                  <div class="col-md-5">
+                    <input class="form-control" id="criterioVenta" placeholder="Comprobante, SKU o descripción"/>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" id="fechaVenta" type="date"/>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-primary w-100" id="btnBuscarVenta">
+                      <span class="spinner-border spinner-border-sm d-none" id="spinnerVenta">
+                      </span>
+                      Buscar
+                    </button>
+                  </div>
+                </div>
+                <div class="mt-3" id="resultadosVentas">
+                </div>
+              </section>
+              <section class="tab-pane fade" id="pasoRecibidos">
+                <div class="text-center py-4 d-none" id="spinnerCargaVenta">
+                  <div class="spinner-border">
+                  </div>
+                  <div class="mt-2">
+                    Cargando artículos de la venta...
+                  </div>
+                </div>
+                <div id="contenidoRecibidos">
+                  <div class="alert alert-light border" id="ventaSeleccionada">
+                    Seleccioná una venta.
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                      <thead>
+                        <tr>
+                          <th>
+                            Producto
+                          </th>
+                          <th>
+                            Disponible
+                          </th>
+                          <th>
+                            Cantidad
+                          </th>
+                          <th class="text-end">
+                            Valor reconocido
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="tablaRecibidos">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center border-top pt-3 mt-3">
+                  <button class="btn btn-outline-secondary" id="btnAnteriorVenta">
+                    <i class="bi bi-arrow-left">
+                    </i>
+                    Anterior
+                  </button>
+                  <button class="btn btn-primary" disabled="" id="btnSiguienteEntregados">
+                    Siguiente: entregar al cliente
+                    <i class="bi bi-arrow-right">
+                    </i>
+                  </button>
+                </div>
+              </section>
+              <section class="tab-pane fade" id="pasoEntregados">
+                <div class="input-group mb-3">
+                  <input class="form-control" id="criterioProducto" placeholder="SKU, código o descripción"/>
+                  <button class="btn btn-outline-primary" id="btnBuscarProducto">
+                    <span class="spinner-border spinner-border-sm d-none" id="spinnerProducto">
+                    </span>
+                    Buscar producto
+                  </button>
+                </div>
+                <div id="resultadosProductos">
+                </div>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm align-middle">
+                    <thead>
+                      <tr>
+                        <th>
+                          Producto
+                        </th>
+                        <th>
+                          Color
+                        </th>
+                        <th>
+                          Talle
+                        </th>
+                        <th>
+                          Stock
+                        </th>
+                        <th>
+                          Cantidad
+                        </th>
+                        <th>
+                          Importe
+                        </th>
+                        <th>
+                          Precio unit.
+                        </th>
+                        <th>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaEntregados">
+                    </tbody>
+                  </table>
+                </div>
+                <div class="d-flex justify-content-start border-top pt-3 mt-3">
+                  <button class="btn btn-outline-secondary" id="btnAnteriorRecibidos">
+                    <i class="bi bi-arrow-left">
+                    </i>
+                    Anterior: recibe el local
+                  </button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4">
+          <aside class="card shadow-sm sticky-top" style="top:1rem">
+            <div class="card-header">
+              <strong>
+                Resumen del cambio
+              </strong>
+            </div>
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <span>
+                  Mercadería recibida
+                </span>
+                <strong id="totalRecibido">
+                  $ 0,00
+                </strong>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>
+                  Mercadería entregada
+                </span>
+                <strong id="totalEntregado">
+                  $ 0,00
+                </strong>
+              </div>
+              <div class="d-flex justify-content-between border-top mt-2 pt-2 fs-5">
+                <span>
+                  Diferencia
+                </span>
+                <strong id="diferencia">
+                  $ 0,00
+                </strong>
+              </div>
+              <div class="alert alert-warning mt-3 d-none" id="avisoMenor">
+                La mercadería entregada es de menor valor.
+              </div>
+              <div class="form-check bloque-absorber-diferencia border rounded p-3 ps-5 mt-3 bg-light">
+                <input class="form-check-input" id="absorberDiferencia" type="checkbox"/>
+                <label class="form-check-label fw-semibold" for="absorberDiferencia">
+                  Concretar el cambio sin cobrar ni devolver la diferencia
+                </label>
+                <div class="small text-muted">
+                  La diferencia quedará registrada como absorbida por el local.
+                </div>
+              </div>
+              <hr/>
+              <div id="bloquePagoDiferencia">
+                <label class="form-label">
+                  Medio de pago de la diferencia
+                </label>
+                <select class="form-select mb-2" id="medioPago">
+                </select>
+                <label class="form-label">
+                  Importe a cobrar
+                </label>
+                <input class="form-control mb-3" id="importePago" min="0" readonly="" step="0.01" type="number"/>
+              </div>
+              <label class="form-label">
+                Observaciones
+              </label>
+              <textarea class="form-control mb-3" id="observaciones" rows="2"></textarea>
+              <div class="alert alert-primary py-2 text-center d-none" id="estadoConfirmacion">
+                <span class="spinner-border spinner-border-sm me-2">
+                </span>
+                Registrando cambio y actualizando stock…
+              </div>
+              <button class="btn btn-success w-100" disabled="" id="btnConfirmar">
+                <span class="spinner-border spinner-border-sm d-none" id="spinnerConfirmar">
+                </span>
+                <i class="bi bi-check2-circle">
+                </i>
+                Confirmar cambio
+              </button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="modalComprobanteCambio" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              Comprobante de cambio
+            </h5>
+            <button aria-label="Cerrar comprobante" class="btn-close" data-bs-dismiss="modal">
+            </button>
+          </div>
+          <div class="modal-body" id="comprobanteCambio">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-primary" onclick="window.print()">
+              Imprimir
+            </button>
+            <button class="btn btn-secondary" data-bs-dismiss="modal">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div aria-hidden="true" aria-labelledby="tituloHistorialComercial" class="modal fade" id="modalHistorialComercial" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloHistorialComercial">
+              <i class="bi bi-clock-history">
+              </i>
+              Historial comercial
+            </h5>
+            <button aria-label="Cerrar" class="btn-close" data-bs-dismiss="modal" type="button">
+            </button>
+          </div>
+          <div class="modal-body" id="contenidoHistorialComercial">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
+    </script>
+    <script src="js/config.js?v=0.23.0-RC1.1">
+    </script>
+    <script src="js/api.js?v=0.23.0-RC1.1">
+    </script>
+    <script src="js/seguridad.js?v=0.23.0-RC1.1">
+    </script>
+    <script src="js/utilidades.js">
+    </script>
+    <script src="js/mensajes.js">
+    </script>
+    <script src="js/navegacion.js?v=0.23.0-RC1.1">
+    </script>
+    <script src="js/cambios.js?v=0.23.0-RC1.1">
+    </script>
+  </body>
+</html>
+

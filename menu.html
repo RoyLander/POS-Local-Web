@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1">
+
+    <title>POS Local - Inicio</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/navegacion.css">
+</head>
+
+<body class="menu-page">
+
+    <div id="navegacionPrincipal"></div>
+
+    <div
+        id="contenedorMensajes"
+        class="position-fixed top-0 start-50 translate-middle-x mt-3"
+        style="z-index:3000;width:min(520px,92%);">
+    </div>
+
+    <main class="container menu-main">
+
+        <section class="menu-welcome">
+
+            <div>
+                <span class="menu-eyebrow">Panel operativo</span>
+
+                <h1>
+                    Gestión diaria del comercio
+                </h1>
+
+                <p>
+                    Controle ventas, caja, productos e inventario desde un único lugar.
+                </p>
+            </div>
+
+            <a
+                class="btn btn-primary btn-lg"
+                href="index.html">
+
+                <i class="bi bi-cart-check"></i>
+                Iniciar venta
+            </a>
+
+        </section>
+
+        <section class="dashboard-grid">
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon text-primary">
+                    <i class="bi bi-cash-register"></i>
+                </div>
+
+                <div>
+                    <small>Estado de caja</small>
+                    <h3 id="lblDashboardCaja" class="text-secondary">
+                        Consultando...
+                    </h3>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon text-success">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+
+                <div>
+                    <small>Ventas de hoy</small>
+                    <h3 id="lblVentasHoy">$ 0</h3>
+                    <span id="lblTicketsHoy">0 tickets</span>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon text-info">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+
+                <div>
+                    <small>Productos activos</small>
+                    <h3 id="lblProductosActivos">0</h3>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon text-warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+
+                <div>
+                    <small>Stock bajo</small>
+                    <h3 id="lblStockBajo">0</h3>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon text-danger">
+                    <i class="bi bi-x-octagon"></i>
+                </div>
+
+                <div>
+                    <small>Sin stock</small>
+                    <h3 id="lblSinStock">0</h3>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon text-secondary">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+
+                <div>
+                    <small>Última actualización</small>
+                    <h3 id="lblUltimaActualizacion" class="dashboard-date">-</h3>
+                </div>
+            </article>
+
+        </section>
+
+        <div class="menu-section-title">
+            <div>
+                <span class="menu-eyebrow">Módulos</span>
+                <h2>Accesos principales</h2>
+            </div>
+        </div>
+
+        <section class="menu-grid">
+
+            <a class="module-card module-card-primary" href="index.html">
+                <div class="module-icon"><i class="bi bi-cart4"></i></div>
+                <div class="module-content">
+                    <h3>Punto de venta</h3>
+                    <p>Buscar artículos, cobrar y emitir comprobantes.</p>
+                </div>
+                <i class="bi bi-chevron-right module-arrow"></i>
+            </a>
+
+            <a class="module-card" href="productos.html">
+                <div class="module-icon"><i class="bi bi-box-seam"></i></div>
+                <div class="module-content">
+                    <h3>Productos</h3>
+                    <p>Administrar artículos, precios y variantes.</p>
+                </div>
+                <i class="bi bi-chevron-right module-arrow"></i>
+            </a>
+
+            <a class="module-card" href="inventario.html">
+                <div class="module-icon"><i class="bi bi-boxes"></i></div>
+                <div class="module-content">
+                    <h3>Inventario</h3>
+                    <p>Existencias, movimientos y Kardex.</p>
+                </div>
+                <i class="bi bi-chevron-right module-arrow"></i>
+            </a>
+
+            <a class="module-card" href="conteo-inventario.html">
+                <div class="module-icon"><i class="bi bi-clipboard-check"></i></div>
+                <div class="module-content">
+                    <h3>Conteo físico</h3>
+                    <p>Registrar stock contado y aplicar diferencias.</p>
+                </div>
+                <i class="bi bi-chevron-right module-arrow"></i>
+            </a>
+
+            <a class="module-card" href="reportes-inventario.html">
+                <div class="module-icon"><i class="bi bi-bar-chart-line"></i></div>
+                <div class="module-content">
+                    <h3>Reportes de inventario</h3>
+                    <p>Stock bajo, valorización y exportación.</p>
+                </div>
+                <i class="bi bi-chevron-right module-arrow"></i>
+            </a>
+
+            <a class="module-card" href="ventas.html">
+                <div class="module-icon"><i class="bi bi-receipt"></i></div>
+                <div class="module-content">
+                    <h3>Ventas</h3>
+                    <p>Consulta, detalle, reimpresión y anulación.</p>
+                </div>
+                <i class="bi bi-chevron-right module-arrow"></i>
+            </a>
+
+            <a class="module-card" href="caja.html">
+                <div class="module-icon"><i class="bi bi-cash-register"></i></div>
+                <div class="module-content">
+                    <h3>Caja</h3>
+                    <p>Apertura, movimientos, arqueo y cierre.</p>
+                </div>
+                <i class="bi bi-chevron-right module-arrow"></i>
+            </a>
+
+            <a class="module-card" href="herramientas.html">
+                <div class="module-icon"><i class="bi bi-tools"></i></div>
+                <div class="module-content">
+                    <h3>Herramientas</h3>
+                    <p>Diagnóstico y verificación de estructura.</p>
+                </div>
+                <i class="bi bi-chevron-right module-arrow"></i>
+            </a>
+
+        </section>
+
+    </main>
+
+    <footer class="menu-footer">
+        <div class="container">
+            <span>POS Local</span>
+            <span>Gestión comercial e inventario</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js?v=0.23.0-RC1.1"></script>
+    <script src="js/api.js?v=0.23.0-RC1.1"></script><script src="js/seguridad.js?v=0.23.0-RC1.1"></script>
+    <script src="js/mensajes.js"></script>
+    <script src="js/navegacion.js?v=0.23.0-RC1.1"></script>
+    <script src="js/menu.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+.catalogo-main {
+    padding: 12px;
+    gap: 12px;
+}
+
+.catalogo-filtros,
+.catalogo-resumen {
+    flex: 0 0 auto;
+}
+
+.catalogo-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.catalogo-card .card-header {
+    flex: 0 0 auto;
+}
+
+#tablaCatalogoProductos td {
+    vertical-align: middle;
+}
+
+#tablaCatalogoProductos th,
+#tablaCatalogoProductos td {
+    white-space: nowrap;
+}
+
+#tablaCatalogoProductos td:nth-child(4) {
+    min-width: 240px;
+    white-space: normal;
+}
+
+#modalProducto .modal-body {
+    background: #f8f9fa;
+}
+
+@media (max-width: 991.98px) {
+    .catalogo-main {
+        gap: 10px;
+    }
+
+    .catalogo-card {
+        min-height: 420px;
+    }
+}

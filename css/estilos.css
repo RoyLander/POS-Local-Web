@@ -1,0 +1,213 @@
+/* =========================================================
+   POS Local - estilos.css
+   Versión consolidada para pantalla de caja
+   ========================================================= */
+
+/* ---------- Base ---------- */
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: #f3f5f7;
+    font-family: Arial, sans-serif;
+}
+
+body.pos-screen {
+    overflow: hidden;
+}
+
+/* ---------- Componentes generales ---------- */
+
+.sombra {
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.card-header {
+    background: #ffffff;
+    font-weight: 700;
+}
+
+table {
+    font-size: 14px;
+}
+
+#tablaProductos td,
+#tablaCarrito td {
+    vertical-align: middle;
+}
+
+#lblTotal {
+    color: #0d6efd;
+    font-weight: 700;
+}
+
+#lblArticulos,
+#lblUnidades,
+#lblTotalMini {
+    margin: 0;
+    font-weight: 700;
+}
+
+#lblTotalMini {
+    color: #198754;
+}
+
+/* ---------- Estructura principal ---------- */
+
+.pos-main {
+    height: calc(100vh - 56px);
+    padding: 12px;
+    overflow: hidden;
+}
+
+.pos-main > .row {
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    flex-wrap: nowrap;
+}
+
+.pos-column {
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* ---------- Tarjetas con contenido desplazable ---------- */
+
+.pos-list-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.pos-list-card .card-header {
+    flex: 0 0 auto;
+}
+
+.pos-table-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.pos-table-scroll table {
+    margin-bottom: 0;
+}
+
+.pos-table-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #ffffff;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Dashboard ---------- */
+
+.pos-dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    flex: 0 0 auto;
+    min-height: 0;
+}
+
+.pos-dashboard .card {
+    min-height: 68px;
+    margin: 0;
+}
+
+.pos-dashboard .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pos-dashboard h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+.pos-dashboard small {
+    display: block;
+    line-height: 1.1;
+}
+
+/* ---------- Panel de cobro ---------- */
+
+.pos-payment-card {
+    flex: 0 0 auto;
+}
+
+.pos-payment-card .card-body {
+    padding: 12px;
+}
+
+/* ---------- Barra inferior opcional ---------- */
+
+.pos-footer {
+    flex: 0 0 auto;
+    min-height: 30px;
+    padding: 5px 12px;
+    background: #212529;
+    color: #ffffff;
+    font-size: 0.8rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 991.98px) {
+
+    body.pos-screen {
+        overflow: auto;
+    }
+
+    .pos-main {
+        height: auto;
+        min-height: calc(100vh - 56px);
+        overflow: visible;
+    }
+
+    .pos-main > .row {
+        height: auto;
+        flex-wrap: wrap;
+    }
+
+    .pos-column {
+        height: auto !important;
+        overflow: visible;
+        margin-bottom: 12px;
+    }
+
+    .pos-list-card {
+        max-height: 430px;
+    }
+
+    .pos-table-scroll {
+        max-height: 350px;
+    }
+
+    .pos-dashboard {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575.98px) {
+
+    .pos-dashboard {
+        grid-template-columns: 1fr;
+    }
+}

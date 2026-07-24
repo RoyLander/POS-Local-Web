@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>POS Local - Carga masiva de productos</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/navegacion.css">
+  <link rel="stylesheet" href="css/modulosProfesionales.css">
+  <link rel="stylesheet" href="css/cargaMasivaProductos.css">
+</head>
+<body class="app-screen">
+<div class="app-shell">
+  <div id="navegacionPrincipal"></div>
+
+  <header class="module-action-bar">
+    <div class="module-action-title">
+      <i class="bi bi-table"></i>
+      <div>
+        <h1>Carga masiva de productos</h1>
+        <small>Alta de artículos y variantes en formato grilla</small>
+      </div>
+    </div>
+
+    <div class="module-action-buttons">
+      <a class="btn btn-outline-secondary btn-sm" href="productos.html">
+        <i class="bi bi-arrow-left"></i> Volver a productos
+      </a>
+      <button id="btnAgregarFila" type="button" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-plus-circle"></i> Agregar fila
+      </button>
+      <button id="btnGuardarTodo" type="button" class="btn btn-success btn-sm">
+        <i class="bi bi-cloud-arrow-up"></i> Guardar productos
+      </button>
+    </div>
+  </header>
+
+  <div id="contenedorMensajes"
+       class="position-fixed top-0 start-50 translate-middle-x mt-3"
+       style="z-index:2000;width:min(600px,90%);"></div>
+
+  <main class="container-fluid app-main carga-masiva-main">
+    <section class="card sombra mb-3">
+      <div class="card-body py-3">
+        <div class="row g-3 align-items-center">
+          <div class="col-lg-7">
+            <div class="d-flex gap-2 align-items-start">
+              <i class="bi bi-info-circle text-primary fs-5"></i>
+              <div class="small">
+                <strong>Descripción</strong> y <strong>Precio de venta</strong> son obligatorios.
+                El SKU se genera automáticamente al guardar. El código de barras es opcional. Puede copiar filas desde Excel o Google Sheets y pegarlas en la primera celda.
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="carga-resumen">
+              <span>Total: <strong id="lblTotalFilas">0</strong></span>
+              <span>Listas: <strong id="lblFilasValidas" class="text-success">0</strong></span>
+              <span>Con errores: <strong id="lblFilasInvalidas" class="text-danger">0</strong></span>
+              <span>Guardadas: <strong id="lblFilasGuardadas" class="text-primary">0</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card sombra app-panel carga-masiva-card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-grid-3x3-gap"></i> Productos a crear</span>
+        <small id="lblEstadoCarga" class="text-muted">Listo</small>
+      </div>
+
+      <div class="table-responsive carga-masiva-scroll">
+        <table class="table table-bordered table-hover align-middle mb-0 tabla-carga-masiva">
+          <thead>
+            <tr>
+              <th class="col-fila">#</th>
+              <th>Código de barras</th>
+              <th class="col-descripcion">Descripción *</th>
+              <th>Marca</th>
+              <th>Categoría</th>
+              <th>Temporada</th>
+              <th>Color</th>
+              <th>Talle</th>
+              <th>Precio compra</th>
+              <th>Precio venta *</th>
+              <th>Stock mínimo</th>
+              <th>Stock inicial</th>
+              <th>Estado</th>
+              <th class="col-resultado">Resultado</th>
+              <th class="col-acciones"></th>
+            </tr>
+          </thead>
+          <tbody id="tablaCargaProductos"></tbody>
+        </table>
+      </div>
+
+      <div class="card-footer d-flex flex-wrap gap-2 justify-content-between align-items-center">
+        <div class="d-flex gap-2">
+          <button id="btnAgregarCinco" type="button" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-plus-square"></i> Agregar 5 filas
+          </button>
+          <button id="btnLimpiarGrilla" type="button" class="btn btn-outline-danger btn-sm">
+            <i class="bi bi-trash"></i> Limpiar grilla
+          </button>
+        </div>
+        <small class="text-muted">Las filas completamente vacías no se envían.</small>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/config.js?v=0.23.0-RC1.1"></script>
+<script src="js/api.js?v=0.23.0-RC1.1"></script><script src="js/seguridad.js?v=0.23.0-RC1.1"></script>
+<script src="js/mensajes.js"></script>
+<script src="js/navegacion.js?v=0.23.0-RC1.1"></script>
+<script src="js/maestrosCombos.js?v=0.23.0-RC1.1"></script>
+<script src="js/cargaMasivaProductos.js?v=0.23.0-RC1.1"></script>
+</body>
+</html>

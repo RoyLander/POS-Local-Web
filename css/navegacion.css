@@ -1,0 +1,145 @@
+/* =========================================================
+   POS Local - Navegación unificada
+   ========================================================= */
+
+:root {
+    --pos-nav-height: 56px;
+    --pos-breadcrumb-height: 38px;
+    --pos-header-total-height: 94px;
+}
+
+.pos-global-nav {
+    position: relative;
+    z-index: 1050;
+    min-height: var(--pos-nav-height);
+}
+
+.pos-global-nav .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 700;
+}
+
+.pos-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.08;
+}
+
+.pos-brand-text small {
+    min-height: 13px;
+    margin-top: 2px;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.68rem;
+    font-weight: 400;
+}
+
+.pos-global-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pos-global-nav .nav-link.active,
+.pos-global-nav .dropdown-item.active {
+    font-weight: 700;
+}
+
+.pos-global-nav .dropdown-menu {
+    min-width: 250px;
+}
+
+.pos-global-nav .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pos-global-nav .dropdown-item i {
+    width: 18px;
+    text-align: center;
+}
+
+.pos-global-context {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.8rem;
+}
+
+.pos-global-context strong {
+    color: #ffffff;
+}
+
+.pos-environment-badge {
+    min-width: 92px;
+    padding: 0.45em 0.7em;
+    letter-spacing: 0.035em;
+    text-align: center;
+}
+
+.pos-breadcrumb-bar {
+    min-height: var(--pos-breadcrumb-height);
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 2px 6px rgba(33, 37, 41, 0.05);
+    font-size: 0.84rem;
+}
+
+.pos-breadcrumb-bar .container-fluid {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pos-breadcrumb-bar a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.pos-breadcrumb-bar a:hover {
+    color: #0d6efd;
+}
+
+.pos-breadcrumb-current {
+    color: #212529;
+    font-weight: 700;
+}
+
+.pos-shortcuts-help {
+    flex: 0 0 auto;
+    color: #6c757d;
+    font-size: 0.76rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 991.98px) {
+    :root {
+        --pos-header-total-height: auto;
+    }
+
+    .pos-global-context {
+        margin-top: 12px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .pos-breadcrumb-bar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .pos-shortcuts-help {
+        white-space: normal;
+    }
+}

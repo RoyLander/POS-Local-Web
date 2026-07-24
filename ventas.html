@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>POS Local - Ventas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/navegacion.css">
+    <link rel="stylesheet" href="css/pantallasNavegacion.css">
+    <link rel="stylesheet" href="css/ventasAdmin.css">
+</head>
+
+<body class="app-screen">
+
+<div class="app-shell">
+    <div id="navegacionPrincipal"></div>
+
+    <div id="contenedorMensajes"
+         class="position-fixed top-0 start-50 translate-middle-x mt-3"
+         style="z-index:2000;width:min(500px,90%);"></div>
+
+    <main class="container-fluid app-main ventas-main">
+
+        <section class="card sombra ventas-filtros">
+            <div class="card-header">
+                <i class="bi bi-funnel"></i> Consulta de ventas
+            </div>
+
+            <div class="card-body">
+                <div class="row g-2">
+
+                    <div class="col-lg-2">
+                        <label for="ventaFechaDesde" class="form-label">Desde</label>
+                        <input id="ventaFechaDesde" type="date" class="form-control">
+                    </div>
+
+                    <div class="col-lg-2">
+                        <label for="ventaFechaHasta" class="form-label">Hasta</label>
+                        <input id="ventaFechaHasta" type="date" class="form-control">
+                    </div>
+
+                    <div class="col-lg-2">
+                        <label for="ventaNumeroComprobante" class="form-label">Comprobante</label>
+                        <input id="ventaNumeroComprobante" type="text" class="form-control"
+                               placeholder="01-00000001">
+                    </div>
+
+                    <div class="col-lg-2">
+                        <label for="ventaMedioPago" class="form-label">Medio de pago</label>
+                        <select id="ventaMedioPago" class="form-select">
+                            <option value="">Todos</option>
+                            <option>Efectivo</option>
+                            <option>Débito</option>
+                            <option>Crédito</option>
+                            <option>Transferencia</option>
+                            <option>Mercado Pago</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <label for="ventaEstado" class="form-label">Estado</label>
+                        <select id="ventaEstado" class="form-select">
+                            <option value="">Todos</option>
+                            <option value="COBRADA">Cobradas</option>
+                            <option value="ANULADA">Anuladas</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 d-flex align-items-end gap-2">
+                        <button id="btnBuscarVentas" type="button" class="btn btn-primary flex-fill">
+                            <i class="bi bi-search"></i> Buscar
+                        </button>
+
+                        <button id="btnLimpiarVentas" type="button" class="btn btn-outline-secondary">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="row g-3 ventas-resumen">
+
+            <div class="col-md-4">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Ventas encontradas</small>
+                        <h4 id="lblCantidadVentas" class="mb-0">0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Total cobrado</small>
+                        <h4 id="lblTotalVentas" class="mb-0 text-success">$ 0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Ventas anuladas</small>
+                        <h4 id="lblVentasAnuladas" class="mb-0 text-danger">0</h4>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card sombra app-panel ventas-card">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-list-ul"></i> Ventas</span>
+                <small id="lblEstadoVentas" class="text-muted">Listo</small>
+            </div>
+
+            <div class="table-responsive app-scroll">
+                <table class="table table-hover table-striped mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Comprobante</th>
+                            <th>Fecha</th>
+                            <th>Caja</th>
+                            <th>Usuario</th>
+                            <th>Medio de pago</th>
+                            <th>Estado</th>
+                            <th class="text-end">Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaVentas">
+                        <tr>
+                            <td colspan="9" class="text-center text-muted">
+                                Cargando ventas...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<div class="modal fade" id="modalDetalleVenta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title mb-1">Detalle de venta</h5>
+                    <small id="detalleVentaComprobante" class="text-muted"></small>
+                </div>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row g-3 mb-3">
+
+                    <div class="col-md-2">
+                        <small class="text-muted">Id venta</small>
+                        <div id="detalleVentaId" class="fw-bold"></div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <small class="text-muted">Fecha</small>
+                        <div id="detalleVentaFecha" class="fw-bold"></div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <small class="text-muted">Caja</small>
+                        <div id="detalleVentaCaja" class="fw-bold"></div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <small class="text-muted">Usuario</small>
+                        <div id="detalleVentaUsuario" class="fw-bold"></div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <small class="text-muted">Medio de pago</small>
+                        <div id="detalleVentaMedioPago" class="fw-bold"></div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <small class="text-muted">Estado</small>
+                        <div id="detalleVentaEstado" class="fw-bold"></div>
+                    </div>
+
+                </div>
+
+                <div id="bloqueDatosAnulacion" class="alert alert-danger d-none">
+                    <strong>Venta anulada.</strong>
+                    <span id="detalleVentaMotivoAnulacion"></span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>SKU</th>
+                                <th class="text-end">Cantidad</th>
+                                <th class="text-end">Precio</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaDetalleVenta">
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    Seleccione una venta.
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div class="text-end mt-3">
+                    <small class="text-muted">Total</small>
+                    <h3 id="detalleVentaTotal" class="mb-0">$ 0</h3>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button id="btnAnularVenta" type="button" class="btn btn-outline-danger">
+                    <i class="bi bi-x-octagon"></i> Anular venta
+                </button>
+
+                <button id="btnReimprimirVenta" type="button" class="btn btn-outline-primary">
+                    <i class="bi bi-printer"></i> Reimprimir
+                </button>
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAnularVenta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Anular venta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="alert alert-warning">
+                    La anulación devolverá las unidades al stock y registrará
+                    movimientos en el Kardex. Esta operación no elimina la venta.
+                </div>
+
+                <form id="formAnularVenta" novalidate>
+
+                    <div class="mb-3">
+                        <label for="motivoAnulacion" class="form-label">Motivo *</label>
+
+                        <textarea
+                            id="motivoAnulacion"
+                            class="form-control"
+                            rows="4"
+                            maxlength="250"
+                            required
+                            placeholder="Ej.: error de carga, devolución inmediata, venta duplicada">
+                        </textarea>
+
+                        <div class="invalid-feedback">
+                            El motivo es obligatorio.
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <button id="btnConfirmarAnulacion" type="button" class="btn btn-danger">
+                    <i class="bi bi-x-octagon"></i> Confirmar anulación
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/config.js?v=0.23.0-RC1.1"></script>
+<script src="js/api.js?v=0.23.0-RC1.1"></script><script src="js/seguridad.js?v=0.23.0-RC1.1"></script>
+<script src="js/integracionPantallas.js"></script>
+<script src="js/navegacion.js?v=0.23.0-RC1.1"></script>
+<script src="js/mensajes.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/comprobante.js"></script>
+<script src="js/impresion.js"></script>
+<script src="js/ventasAdmin.js?v=0.23.0-RC1.1"></script>
+
+</body>
+</html>

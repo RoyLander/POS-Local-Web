@@ -1,0 +1,27 @@
+/* =========================================================
+   POS Local - Caja
+   ========================================================= */
+
+.caja-main {
+    padding: 12px;
+    gap: 12px;
+}
+
+.caja-tablas {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.caja-tablas > div {
+    min-height: 0;
+}
+
+.caja-tablas .card {
+    overflow: auto;
+}
+
+@media (max-width: 991.98px) {
+    .caja-tablas {
+        min-height: 420px;
+    }
+}

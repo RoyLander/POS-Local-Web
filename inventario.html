@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>POS Local - Inventario</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/inventario.css">
+
+    <link rel="stylesheet" href="css/navegacion.css">
+    <link rel="stylesheet" href="css/pantallasNavegacion.css">
+</head>
+
+<body class="app-screen">
+
+<div class="app-shell">
+    <div id="navegacionPrincipal"></div>
+
+    <div
+        id="contenedorMensajes"
+        class="position-fixed top-0 start-50 translate-middle-x mt-3"
+        style="z-index: 2000; width: min(500px, 90%);">
+    </div>
+
+    <main class="container-fluid app-main inventario-main">
+
+        <section class="card sombra inventario-filtros">
+            <div class="card-header">
+                <i class="bi bi-search"></i>
+                Consulta de inventario
+            </div>
+
+            <div class="card-body">
+                <div class="row g-2">
+
+                    <div class="col-lg-6">
+                        <label for="txtBuscarInventario" class="form-label">
+                            Buscar producto
+                        </label>
+
+                        <input
+                            id="txtBuscarInventario"
+                            type="text"
+                            class="form-control"
+                            placeholder="Código, SKU, descripción, marca, color o talle">
+                    </div>
+
+                    <div class="col-lg-3">
+                        <label for="cmbFiltroInventario" class="form-label">
+                            Estado de stock
+                        </label>
+
+                        <select id="cmbFiltroInventario" class="form-select">
+                            <option value="">Todos</option>
+                            <option value="CON_STOCK">Con stock</option>
+                            <option value="BAJO">Stock bajo</option>
+                            <option value="SIN_STOCK">Sin stock</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3 d-flex align-items-end">
+                        <button
+                            id="btnLimpiarInventario"
+                            type="button"
+                            class="btn btn-outline-secondary w-100">
+
+                            <i class="bi bi-eraser"></i>
+                            Limpiar filtros
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="row g-3 inventario-resumen">
+
+            <div class="col-md-3">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Productos</small>
+                        <h4 id="lblInventarioProductos" class="mb-0">0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Unidades</small>
+                        <h4 id="lblInventarioUnidades" class="mb-0">0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Stock bajo</small>
+                        <h4 id="lblInventarioStockBajo" class="mb-0 text-warning">0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card sombra text-center">
+                    <div class="card-body py-2">
+                        <small class="text-muted">Sin stock</small>
+                        <h4 id="lblInventarioSinStock" class="mb-0 text-danger">0</h4>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card sombra app-panel inventario-card">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>
+                    <i class="bi bi-list-check"></i>
+                    Existencias
+                </span>
+
+                <small id="lblEstadoInventario" class="text-muted">
+                    Listo
+                </small>
+            </div>
+
+            <div class="table-responsive app-scroll">
+
+                <table class="table table-hover table-striped mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>SKU</th>
+                            <th>Descripción</th>
+                            <th>Marca</th>
+                            <th>Color</th>
+                            <th>Talle</th>
+                            <th class="text-center">Mínimo</th>
+                            <th class="text-center">Stock</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaInventario">
+                        <tr>
+                            <td colspan="9" class="text-center text-muted">
+                                Cargando inventario...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div class="modal fade" id="modalMovimientoInventario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Registrar movimiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="formMovimientoInventario" novalidate>
+
+                    <input id="movimientoIdProducto" type="hidden">
+
+                    <div class="mb-3">
+                        <label class="form-label">Producto</label>
+                        <div id="movimientoProductoDescripcion" class="form-control bg-light"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Stock actual</label>
+                        <div id="movimientoStockActual" class="form-control bg-light">0</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="movimientoTipo" class="form-label">Tipo de movimiento</label>
+                        <select id="movimientoTipo" class="form-select" required>
+                            <option value="INGRESO">Ingreso</option>
+                            <option value="EGRESO">Egreso</option>
+                            <option value="AJUSTE">Ajuste por conteo</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label
+                            for="movimientoCantidad"
+                            class="form-label"
+                            id="lblMovimientoCantidad">
+                            Cantidad
+                        </label>
+
+                        <input
+                            id="movimientoCantidad"
+                            type="number"
+                            class="form-control"
+                            min="0"
+                            step="1"
+                            required>
+
+                        <div class="invalid-feedback">
+                            Ingrese una cantidad válida.
+                        </div>
+
+                        <div id="ayudaMovimientoCantidad" class="form-text">
+                            La cantidad se sumará al stock actual.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="movimientoObservacion" class="form-label">
+                            Observación *
+                        </label>
+
+                        <textarea
+                            id="movimientoObservacion"
+                            class="form-control"
+                            rows="3"
+                            required
+                            maxlength="250"
+                            placeholder="Ej.: carga inicial, ingreso de proveedor, diferencia de conteo">
+                        </textarea>
+
+                        <div class="invalid-feedback">
+                            La observación es obligatoria.
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <button id="btnGuardarMovimiento" type="button" class="btn btn-primary">
+                    <i class="bi bi-save"></i>
+                    Registrar movimiento
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalKardex" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title mb-1">
+                        Historial de movimientos
+                    </h5>
+
+                    <small
+                        id="kardexProductoDescripcion"
+                        class="text-muted">
+                    </small>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover table-striped mb-0">
+
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th class="text-end">Cantidad</th>
+                                <th class="text-end">Anterior</th>
+                                <th class="text-end">Nuevo</th>
+                                <th>Observación</th>
+                                <th>Usuario</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaKardex">
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">
+                                    Seleccione un producto.
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/config.js?v=0.23.0-RC1.1"></script>
+<script src="js/api.js?v=0.23.0-RC1.1"></script><script src="js/seguridad.js?v=0.23.0-RC1.1"></script>
+<script src="js/mensajes.js"></script>
+<script src="js/inventario.js"></script>
+
+<script src="js/integracionPantallas.js"></script>
+<script src="js/navegacion.js?v=0.23.0-RC1.1"></script>
+
+</body>
+
+</html>

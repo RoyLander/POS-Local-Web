@@ -1,0 +1,15 @@
+.herramientas-main {
+    padding: 12px;
+    gap: 12px;
+}
+
+.herramientas-acciones,
+.herramientas-resumen {
+    flex: 0 0 auto;
+}
+
+.herramientas-resultados {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}

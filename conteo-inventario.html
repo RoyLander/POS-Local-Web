@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1">
+
+    <title>
+        POS Local - Conteo físico
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link
+        rel="stylesheet"
+        href="css/estilos.css">
+
+    <link
+        rel="stylesheet"
+        href="css/layout.css">
+
+    <link
+        rel="stylesheet"
+        href="css/navegacion.css">
+
+    <link
+        rel="stylesheet"
+        href="css/conteoInventario.css">
+</head>
+
+<body class="app-screen">
+
+    <div id="navegacionPrincipal"></div>
+
+    <div
+        id="contenedorMensajes"
+        class="position-fixed top-0 start-50 translate-middle-x mt-3"
+        style="z-index: 3000; width: min(520px, 92%);">
+    </div>
+
+    <main class="container-fluid conteo-main">
+
+        <section class="card sombra conteo-header">
+
+            <div class="card-body">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-lg-5">
+
+                        <label
+                            for="txtBuscarConteo"
+                            class="form-label">
+
+                            Buscar producto
+                        </label>
+
+                        <input
+                            id="txtBuscarConteo"
+                            type="text"
+                            class="form-control"
+                            placeholder="SKU, código, descripción, marca, color o talle">
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <label
+                            for="cmbFiltroConteo"
+                            class="form-label">
+
+                            Mostrar
+                        </label>
+
+                        <select
+                            id="cmbFiltroConteo"
+                            class="form-select">
+
+                            <option value="">
+                                Todos
+                            </option>
+
+                            <option value="CON_DIFERENCIA">
+                                Con diferencia
+                            </option>
+
+                            <option value="SIN_CONTAR">
+                                Sin contar
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <button
+                            id="btnLimpiarConteo"
+                            type="button"
+                            class="btn btn-outline-secondary w-100">
+
+                            <i class="bi bi-eraser"></i>
+
+                            Limpiar
+                        </button>
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <button
+                            id="btnAplicarConteo"
+                            type="button"
+                            class="btn btn-primary w-100">
+
+                            <i class="bi bi-check2-circle"></i>
+
+                            Aplicar diferencias
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="row g-3 conteo-resumen">
+
+            <div class="col-md-3">
+
+                <div class="card sombra text-center">
+
+                    <div class="card-body py-2">
+
+                        <small class="text-muted">
+                            Productos
+                        </small>
+
+                        <h4 id="lblConteoProductos">
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card sombra text-center">
+
+                    <div class="card-body py-2">
+
+                        <small class="text-muted">
+                            Contados
+                        </small>
+
+                        <h4
+                            id="lblConteoContados"
+                            class="text-primary">
+
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card sombra text-center">
+
+                    <div class="card-body py-2">
+
+                        <small class="text-muted">
+                            Con diferencia
+                        </small>
+
+                        <h4
+                            id="lblConteoDiferencias"
+                            class="text-warning">
+
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card sombra text-center">
+
+                    <div class="card-body py-2">
+
+                        <small class="text-muted">
+                            Diferencia neta
+                        </small>
+
+                        <h4
+                            id="lblConteoNeto"
+                            class="text-secondary">
+
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="card sombra conteo-card">
+
+            <div
+                class="card-header d-flex justify-content-between align-items-center">
+
+                <span>
+                    <i class="bi bi-clipboard-check"></i>
+                    Conteo físico
+                </span>
+
+                <small
+                    id="lblEstadoConteo"
+                    class="text-muted">
+
+                    Listo
+                </small>
+
+            </div>
+
+            <div class="table-responsive conteo-scroll">
+
+                <table class="table table-hover table-striped mb-0">
+
+                    <thead>
+
+                        <tr>
+                            <th>SKU</th>
+                            <th>Descripción</th>
+                            <th>Color</th>
+                            <th>Talle</th>
+                            <th class="text-end">
+                                Stock sistema
+                            </th>
+                            <th class="text-end">
+                                Stock contado
+                            </th>
+                            <th class="text-end">
+                                Diferencia
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaConteo">
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="text-center text-muted">
+
+                                Cargando productos...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div
+        class="modal fade"
+        id="modalConfirmarConteo"
+        tabindex="-1"
+        aria-hidden="true">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Aplicar diferencias
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="alert alert-warning">
+
+                        Se actualizará el stock de todos los productos
+                        contados que tengan diferencias.
+
+                    </div>
+
+                    <label
+                        for="txtObservacionConteo"
+                        class="form-label">
+
+                        Observación *
+                    </label>
+
+                    <textarea
+                        id="txtObservacionConteo"
+                        class="form-control"
+                        rows="3"
+                        maxlength="250"
+                        required
+                        placeholder="Ej.: Conteo físico mensual">
+                    </textarea>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal">
+
+                        Cancelar
+                    </button>
+
+                    <button
+                        id="btnConfirmarConteo"
+                        type="button"
+                        class="btn btn-primary">
+
+                        <i class="bi bi-check2-circle"></i>
+
+                        Confirmar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js/config.js?v=0.23.0-RC1.1"></script>
+    <script src="js/api.js?v=0.23.0-RC1.1"></script><script src="js/seguridad.js?v=0.23.0-RC1.1"></script>
+    <script src="js/mensajes.js"></script>
+    <script src="js/navegacion.js?v=0.23.0-RC1.1"></script>
+    <script src="js/conteoInventario.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+/* =========================================================
+   POS Local - Reportes de inventario
+   ========================================================= */
+
+html,
+body.app-screen {
+    height: 100%;
+    overflow: hidden;
+}
+
+.reportes-main {
+    height: calc(100vh - var(--pos-header-total-height, 94px));
+    min-height: 0;
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.reportes-filtros,
+.reportes-resumen {
+    flex: 0 0 auto;
+}
+
+.reportes-resumen .card-body {
+    min-height: 58px;
+}
+
+.reportes-resumen h4 {
+    margin-bottom: 0;
+}
+
+.reportes-card {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.reportes-card .card-header {
+    flex: 0 0 auto;
+}
+
+.reportes-scroll {
+    flex: 1 1 0;
+    min-height: 0;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
+.reportes-scroll table {
+    min-width: 1380px;
+    margin-bottom: 0;
+}
+
+.reportes-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #ffffff;
+    white-space: nowrap;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.reportes-scroll td {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.reportes-importe {
+    font-size: 0.95rem;
+}
+
+.estado-stock {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+@media (max-width: 1199.98px) {
+    html,
+    body.app-screen {
+        min-height: 100%;
+        overflow: auto;
+    }
+
+    .reportes-main {
+        height: calc(100vh - 132px);
+        min-height: 580px;
+    }
+
+    .reportes-scroll {
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+}

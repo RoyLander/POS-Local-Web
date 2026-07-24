@@ -1,0 +1,25 @@
+.carga-masiva-main { min-height: 0; }
+.carga-masiva-card { min-height: 0; }
+.carga-masiva-scroll { max-height: calc(100vh - 310px); }
+.tabla-carga-masiva { min-width: 2200px; font-size: .84rem; }
+.tabla-carga-masiva thead { position: sticky; top: 0; z-index: 5; }
+.tabla-carga-masiva th { white-space: nowrap; background: var(--bs-dark); color: #fff; vertical-align: middle; }
+.tabla-carga-masiva td { padding: .3rem; }
+.tabla-carga-masiva input,
+.tabla-carga-masiva select { min-width: 115px; font-size: .84rem; padding: .35rem .45rem; }
+.tabla-carga-masiva .campo-descripcion { min-width: 260px; }
+.tabla-carga-masiva .campo-numero { min-width: 105px; text-align: right; }
+.tabla-carga-masiva .col-fila { width: 48px; text-align: center; }
+.tabla-carga-masiva .col-descripcion { min-width: 280px; }
+.tabla-carga-masiva .col-resultado { min-width: 210px; }
+.tabla-carga-masiva .col-acciones { width: 88px; }
+.tabla-carga-masiva tr.fila-error > td { background-color: rgba(220, 53, 69, .08); }
+.tabla-carga-masiva tr.fila-ok > td { background-color: rgba(25, 135, 84, .08); }
+.tabla-carga-masiva tr.fila-guardada > td { background-color: rgba(13, 110, 253, .08); }
+.tabla-carga-masiva .resultado-fila { max-width: 260px; white-space: normal; line-height: 1.2; }
+.carga-resumen { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .6rem 1.2rem; font-size: .9rem; }
+.celda-invalida { border-color: var(--bs-danger) !important; box-shadow: 0 0 0 .12rem rgba(220,53,69,.18) !important; }
+@media (max-width: 991px) {
+  .carga-resumen { justify-content: flex-start; }
+  .carga-masiva-scroll { max-height: calc(100vh - 365px); }
+}

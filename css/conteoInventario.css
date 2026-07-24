@@ -1,0 +1,99 @@
+/* =========================================================
+   POS Local - Conteo físico
+   ========================================================= */
+
+html,
+body.app-screen {
+    height: 100%;
+    overflow: hidden;
+}
+
+.conteo-main {
+    height: calc(100vh - var(--pos-header-total-height, 94px));
+    min-height: 0;
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.conteo-header,
+.conteo-resumen {
+    flex: 0 0 auto;
+}
+
+.conteo-resumen .card-body {
+    min-height: 58px;
+}
+
+.conteo-resumen h4 {
+    margin-bottom: 0;
+}
+
+.conteo-card {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.conteo-card .card-header {
+    flex: 0 0 auto;
+}
+
+.conteo-scroll {
+    flex: 1 1 0;
+    min-height: 0;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
+.conteo-scroll table {
+    min-width: 920px;
+    margin-bottom: 0;
+}
+
+.conteo-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #ffffff;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.conteo-input {
+    width: 110px;
+    margin-left: auto;
+    text-align: right;
+}
+
+.conteo-diferencia-positiva {
+    color: #198754;
+    font-weight: 700;
+}
+
+.conteo-diferencia-negativa {
+    color: #dc3545;
+    font-weight: 700;
+}
+
+.conteo-diferencia-cero {
+    color: #6c757d;
+}
+
+@media (max-width: 991.98px) {
+    html,
+    body.app-screen {
+        min-height: 100%;
+        overflow: auto;
+    }
+
+    .conteo-main {
+        height: calc(100vh - 132px);
+        min-height: 560px;
+    }
+}

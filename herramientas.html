@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>POS Local - Herramientas</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/herramientas.css">
+    
+    <link rel="stylesheet" href="css/navegacion.css">
+    <link rel="stylesheet" href="css/pantallasNavegacion.css">
+    
+</head>
+
+<body class="app-screen">
+
+<div class="app-shell">
+    <div id="navegacionPrincipal"></div>
+
+    <div
+        id="contenedorMensajes"
+        class="position-fixed top-0 start-50 translate-middle-x mt-3"
+        style="z-index: 2000; width: min(500px, 90%);">
+    </div>
+
+    <main class="container-fluid app-main herramientas-main">
+
+        <section class="card sombra herramientas-acciones">
+
+            <div class="card-header">
+
+                <i class="bi bi-database-check"></i>
+                Diagnóstico del sistema
+
+            </div>
+
+            <div class="card-body d-flex justify-content-between align-items-center gap-3">
+
+                <div>
+
+                    <h5 class="mb-1">
+                        Verificar estructura de datos
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Comprueba hojas, columnas obligatorias,
+                        encabezados duplicados y claves repetidas.
+                    </p>
+
+                </div>
+
+                <button
+                    id="btnVerificarEstructura"
+                    type="button"
+                    class="btn btn-primary">
+
+                    <i class="bi bi-play-circle"></i>
+                    Ejecutar verificación
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <section class="row g-3 herramientas-resumen">
+
+            <div class="col-md-4">
+
+                <div class="card sombra text-center">
+
+                    <div class="card-body">
+
+                        <small class="text-muted">
+                            Estado general
+                        </small>
+
+                        <h4
+                            id="lblEstadoGeneral"
+                            class="mb-0 text-secondary">
+                            Sin verificar
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card sombra text-center">
+
+                    <div class="card-body">
+
+                        <small class="text-muted">
+                            Errores
+                        </small>
+
+                        <h4
+                            id="lblCantidadErrores"
+                            class="mb-0 text-danger">
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card sombra text-center">
+
+                    <div class="card-body">
+
+                        <small class="text-muted">
+                            Advertencias
+                        </small>
+
+                        <h4
+                            id="lblCantidadAdvertencias"
+                            class="mb-0 text-warning">
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="card sombra app-panel herramientas-resultados">
+
+            <div class="card-header">
+
+                <i class="bi bi-list-check"></i>
+                Resultado
+
+            </div>
+
+            <div class="app-scroll p-3">
+
+                <div
+                    id="resultadoVerificacion"
+                    class="text-muted">
+
+                    Presione «Ejecutar verificación».
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/config.js?v=0.23.0-RC1.1"></script>
+<script src="js/api.js?v=0.23.0-RC1.1"></script><script src="js/seguridad.js?v=0.23.0-RC1.1"></script>
+<script src="js/mensajes.js"></script>
+<script src="js/herramientas.js?v=0.23.0-RC1.1"></script>
+
+<script src="js/integracionPantallas.js"></script>
+<script src="js/navegacion.js?v=0.23.0-RC1.1"></script>
+
+</body>
+
+</html>
