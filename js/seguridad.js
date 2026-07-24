@@ -20,7 +20,8 @@ const SeguridadUI = {
 
   PAGINAS: Object.freeze({
     "menu.html": "pagina.menu",
-    "index.html": "pagina.pos",
+    "index.html": "pagina.menu",
+    "pos.html": "pagina.pos",
     "ventas.html": "pagina.ventas",
     "devoluciones.html": "pagina.devoluciones",
     "devoluciones-consulta.html": "pagina.devolucionesConsulta",
@@ -105,7 +106,7 @@ const SeguridadUI = {
   },
 
   validarPaginaActual() {
-    const archivo = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    const archivo = (location.pathname.split("/").pop() || "menu.html").toLowerCase();
     const permiso = this.PAGINAS[archivo];
     if (!permiso || this.puede(permiso)) return true;
     sessionStorage.setItem("pos_acceso_denegado", `El rol ${this.usuario.rol} no tiene acceso a esta pantalla.`);

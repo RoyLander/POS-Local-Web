@@ -13,7 +13,7 @@ const Navegacion = {
             permiso: "pagina.pos",
             texto: "Punto de venta",
             icono: "bi-cart4",
-            archivo: "index.html"
+            archivo: "pos.html"
         },
         {
             id: "ventas",
@@ -165,7 +165,7 @@ const Navegacion = {
 
                             ${Navegacion.generarEnlacePrincipal("menu", "Inicio", "bi-house", "menu.html", "pagina.menu")}
 
-                            ${Navegacion.generarEnlacePrincipal("pos", "POS", "bi-cart4", "index.html", "pagina.pos")}
+                            ${Navegacion.generarEnlacePrincipal("pos", "POS", "bi-cart4", "pos.html", "pagina.pos")}
 
                             ${Navegacion.generarDesplegable(
                                 "Comercial",
@@ -685,7 +685,7 @@ const Navegacion = {
                 .split("/")
                 .pop()
                 .toLowerCase() ||
-            "index.html"
+            "menu.html"
         );
     },
 
