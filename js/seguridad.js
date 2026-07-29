@@ -5,10 +5,10 @@ const SeguridadUI = {
     ADMIN: ["*"],
     SUPERVISOR: [
       "pagina.menu", "pagina.pos", "pagina.ventas", "pagina.cambios", "pagina.devoluciones", "pagina.devolucionesConsulta", "pagina.productos",
-      "pagina.cargaMasivaProductos", "pagina.maestros", "pagina.inventario",
+      "pagina.cargaMasivaProductos", "pagina.altaRapidaProductos", "pagina.auditoriaSku", "pagina.maestros", "pagina.inventario",
       "pagina.conteo", "pagina.reportesInventario", "pagina.caja",
       "pagina.auditoria", "pagina.herramientas", "pagina.stock",
-      "ventas.anular", "productos.editar", "productos.cargaMasiva",
+      "ventas.anular", "productos.editar", "productos.cargaMasiva", "productos.altaRapida",
       "maestros.editar", "inventario.movimientos", "inventario.conteo",
       "estructura.verificar", "auditoria.ver"
     ],
@@ -27,6 +27,9 @@ const SeguridadUI = {
     "devoluciones-consulta.html": "pagina.devolucionesConsulta",
     "productos.html": "pagina.productos",
     "carga-masiva-productos.html": "pagina.cargaMasivaProductos",
+    "alta-rapida-productos.html": "pagina.altaRapidaProductos",
+    "auditoria-sku.html": "pagina.auditoriaSku",
+    "mercado-libre.html": "pagina.mercadoLibre",
     "maestros-productos.html": "pagina.maestros",
     "medios-pago.html": "pagina.mediosPago",
     "inventario.html": "pagina.inventario",
@@ -136,6 +139,7 @@ const SeguridadUI = {
     const reglas = {
       "productos.editar": ["#btnNuevoProducto", "#btnGuardarProducto"],
       "productos.cargaMasiva": ["#btnGuardarTodo", "#btnAgregarFila", "#btnAgregarCinco", "#btnLimpiarGrilla"],
+      "productos.altaRapida": ["#btnGuardar"],
       "inventario.conteo": ["#btnAplicarConteo", "#btnConfirmarConteo"],
       "inventario.movimientos": ["#btnGuardarMovimiento"],
       "estructura.verificar": ["#btnVerificarEstructura"],

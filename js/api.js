@@ -297,6 +297,64 @@ class Api {
     async obtenerCambio(idCambio) { return await this.get({accion:"obtenerCambio", idCambio}); }
 
     async obtenerAuditoria(filtros={}) { return await this.post({accion:"obtenerAuditoria", filtros}); }
+
+    async auditarSkusProductos() {
+        return await this.get({ accion: "auditarSkusProductos" });
+    }
+
+    async aplicarPropuestasSku(propuestas) {
+        return await this.post({ accion: "aplicarPropuestasSku", propuestas });
+    }
+
+    async obtenerEstadoMercadoLibre() {
+        return await this.get({ accion: "obtenerEstadoMercadoLibre" });
+    }
+
+    async obtenerUrlAutorizacionMercadoLibre() {
+        return await this.get({ accion: "obtenerUrlAutorizacionMercadoLibre" });
+    }
+
+    async listarInventarioMercadoLibre(filtros = {}) {
+        return await this.get({
+            accion: "listarInventarioMercadoLibre",
+            buscar: filtros.buscar || "",
+            estado: filtros.estado || "",
+            stock: filtros.stock || "",
+            estadoPublicacion: filtros.estadoPublicacion || "",
+            variantes: filtros.variantes || "",
+            offset: Number(filtros.offset || 0),
+            limite: Number(filtros.limite || 200)
+        });
+    }
+
+    async buscarProductosVinculacionMercadoLibre(criterio) {
+        return await this.get({ accion: "buscarProductosVinculacionMercadoLibre", criterio: criterio || "" });
+    }
+
+    async importarInventarioMercadoLibre(opciones = {}) {
+        return await this.post({ accion: "importarInventarioMercadoLibre", opciones });
+    }
+
+    async guardarVinculacionMercadoLibre(vinculacion) {
+        return await this.post({ accion: "guardarVinculacionMercadoLibre", vinculacion });
+    }
+
+    async actualizarSkuMercadoLibre(vinculacionId) {
+        return await this.post({ accion: "actualizarSkuMercadoLibre", vinculacionId });
+    }
+
+    async obtenerResumenImportacionMercadoLibre(importacionId) {
+        return await this.get({ accion: "obtenerResumenImportacionMercadoLibre", importacionId });
+    }
+
+    async marcarImportacionMercadoLibreConError(importacionId, mensaje) {
+        return await this.post({ accion: "marcarImportacionMercadoLibreConError", importacionId, mensaje });
+    }
+
+    async desconectarMercadoLibre() {
+        return await this.post({ accion: "desconectarMercadoLibre" });
+    }
+
 }
 
 // Instancia global compartida por seguridad, navegación y módulos independientes.

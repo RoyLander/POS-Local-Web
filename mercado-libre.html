@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>POS Local - Mercado Libre</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/navegacion.css">
+    <link rel="stylesheet" href="css/modulosProfesionales.css">
+    <style>
+        .ml-tabla-contenedor { max-height: calc(100vh - 285px); min-height: 320px; }
+        .ml-tabla { width: 100%; table-layout: fixed; font-size: .82rem; }
+        .ml-tabla th, .ml-tabla td { padding: .38rem .45rem; vertical-align: middle; overflow-wrap: anywhere; }
+        .ml-tabla th:nth-child(1) { width: 29%; }
+        .ml-tabla th:nth-child(2) { width: 9%; }
+        .ml-tabla th:nth-child(3) { width: 11%; }
+        .ml-tabla th:nth-child(4) { width: 12%; }
+        .ml-tabla th:nth-child(5) { width: 11%; }
+        .ml-tabla th:nth-child(6) { width: 11%; }
+        .ml-tabla th:nth-child(7) { width: 11%; }
+        .ml-tabla th:nth-child(8) { width: 6%; }
+        .ml-tabla code { white-space: normal; word-break: break-all; font-size: .78rem; }
+        .ml-publicacion-padre > td { background: var(--bs-tertiary-bg); border-top-width: 2px; }
+        .ml-publicacion-padre { cursor: pointer; }
+        .ml-publicacion-padre:hover > td, .ml-publicacion-padre:focus > td { background: var(--bs-secondary-bg); }
+        .ml-publicacion-padre:focus { outline: 2px solid var(--bs-primary); outline-offset: -2px; }
+        .ml-publicacion-padre strong { font-size: .86rem; }
+        .ml-variante-hija > td:first-child { padding-left: 1.15rem; }
+        .ml-arbol-rama { width: 1.2rem; flex: 0 0 1.2rem; color: var(--bs-secondary-color); font-size: 1rem; }
+        .ml-arbol-toggle { width: 1.2rem; line-height: 1; text-decoration: none; }
+        .min-w-0 { min-width: 0; }
+        @media (max-width: 1200px) {
+            .ml-tabla { min-width: 1050px; }
+            .ml-tabla-contenedor { max-height: calc(100vh - 300px); }
+        }
+    </style>
+</head>
+<body class="app-screen">
+<div class="app-shell">
+    <div id="navegacionPrincipal"></div>
+
+    <header class="module-action-bar">
+        <div class="module-action-title">
+            <i class="bi bi-shop-window"></i>
+            <div>
+                <h1>Mercado Libre</h1>
+                <small>Inventario, vinculación controlada de variantes y actualización de SKU</small>
+            </div>
+        </div>
+        <div class="module-action-buttons">
+            <button id="btnConectar" class="btn btn-warning btn-sm"><i class="bi bi-link-45deg"></i> Conectar cuenta</button>
+            <button id="btnDesconectar" class="btn btn-outline-danger btn-sm d-none"><i class="bi bi-box-arrow-right"></i> Desconectar</button>
+            <button id="btnImportar" class="btn btn-primary btn-sm" disabled><i class="bi bi-cloud-download"></i> Importar inventario</button>
+            <button id="btnActualizar" class="btn btn-outline-primary btn-sm"><i class="bi bi-arrow-clockwise"></i> Actualizar vista</button>
+        </div>
+    </header>
+
+    <div id="overlayImportacionMl" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" style="z-index:2500" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="tituloOverlayImportacionMl">
+        <div class="position-absolute top-50 start-50 translate-middle card shadow-lg" style="width:min(680px,92vw)">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 id="tituloOverlayImportacionMl" class="mb-0"><i class="bi bi-cloud-download"></i> Importando inventario desde Mercado Libre</h5>
+                    <strong id="porcentajeImportacionMl">0%</strong>
+                </div>
+                <div class="progress mb-3" role="progressbar" aria-label="Progreso de importación" aria-valuemin="0" aria-valuemax="100">
+                    <div id="barraImportacionMl" class="progress-bar progress-bar-striped progress-bar-animated" style="width:0%" aria-valuenow="0"></div>
+                </div>
+                <div id="detalleImportacionMl" class="fw-semibold">Preparando importación…</div>
+                <div id="etapaImportacionMl" class="small text-muted mt-1">Conectando con Mercado Libre…</div>
+                <div id="tiempoImportacionMl" class="small text-muted mt-1">Transcurrido: 0:00 · Restante estimado: Calculando…</div>
+                <div class="alert alert-warning py-2 mt-3 mb-0 small">
+                    <i class="bi bi-exclamation-triangle"></i> No cierres ni recargues esta pestaña. La pantalla permanecerá bloqueada hasta finalizar.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlayCargaVistaMl" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" style="z-index:2450" tabindex="-1" role="status" aria-live="polite" aria-hidden="true">
+        <div class="position-absolute top-50 start-50 translate-middle card shadow-lg" style="width:min(420px,90vw)">
+            <div class="card-body p-4 text-center">
+                <div class="spinner-border text-primary mb-3" role="status" aria-hidden="true"></div>
+                <h5 id="mensajeCargaVistaMl" class="mb-1">Cargando inventario…</h5>
+                <div class="small text-muted">Esperá mientras se actualizan los resultados.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contenedorMensajes" class="position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index:2000;width:min(650px,92%)"></div>
+
+    <main class="container-fluid app-main">
+        <section class="card sombra mb-3">
+            <div class="card-body py-2 d-flex flex-wrap gap-3 align-items-center">
+                <span>Configuración: <strong id="lblConfiguracion">—</strong></span>
+                <span>Cuenta: <strong id="lblCuenta">—</strong></span>
+                <span>Última importación: <strong id="lblUltima">—</strong></span>
+                <span class="ms-auto badge text-bg-info">Consulta y SKU; no modifica stock</span>
+            </div>
+        </section>
+
+        <section id="avisoConfig" class="alert alert-warning d-none">
+            <strong>Falta configurar la aplicación.</strong> Seguí el documento <code>docs/19-CONFIGURACION-MERCADO-LIBRE.md</code> y cargá las propiedades del script.
+        </section>
+
+        <section class="card sombra">
+            <div class="card-header">
+                <div class="row g-2 align-items-center">
+                    <div class="col-xl-4 col-md-6">
+                        <input id="txtBuscarMl" class="form-control form-control-sm" placeholder="Buscar publicación, variante, Item ID, producto o SKU">
+                    </div>
+                    <div class="col-xl-2 col-md-3">
+                        <select id="cmbStockMl" class="form-select form-select-sm" aria-label="Filtro de stock">
+                            <option value="">Todo el stock</option>
+                            <option value="CON_STOCK">Con stock</option>
+                            <option value="SIN_STOCK">Sin stock</option>
+                            <option value="STOCK_BAJO">Stock bajo según producto POS</option>
+                            <option value="NO_INFORMADO">Stock no informado</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-md-3">
+                        <select id="cmbEstadoMl" class="form-select form-select-sm" aria-label="Estado de vinculación">
+                            <option value="">Toda vinculación</option>
+                            <option value="SIN_VINCULAR">Sin vincular</option>
+                            <option value="ACTUALIZACION_PENDIENTE">SKU pendiente</option>
+                            <option value="SKU_COINCIDENTE">SKU coincidente</option>
+                            <option value="SIN_SKU_LOCAL">Sin SKU local</option>
+                            <option value="ERROR">Con error</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-md-3">
+                        <select id="cmbEstadoPublicacionMl" class="form-select form-select-sm" aria-label="Estado de publicación">
+                            <option value="">Toda publicación</option>
+                            <option value="active">Activa</option>
+                            <option value="paused">Pausada</option>
+                            <option value="closed">Finalizada</option>
+                            <option value="ERROR">Con error de importación</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-md-3">
+                        <select id="cmbVariantesMl" class="form-select form-select-sm" aria-label="Filtro de variantes">
+                            <option value="">Con o sin variantes</option>
+                            <option value="CON_VARIANTES">Con variantes</option>
+                            <option value="SIN_VARIANTES">Sin variantes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <small id="lblCantidadMl" class="text-muted">0 registros</small>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Paginación">
+                        <button id="btnPaginaAnteriorMl" class="btn btn-outline-secondary" disabled><i class="bi bi-chevron-left"></i></button>
+                        <button id="lblPaginaMl" class="btn btn-outline-secondary disabled" tabindex="-1">Sin resultados</button>
+                        <button id="btnPaginaSiguienteMl" class="btn btn-outline-secondary" disabled><i class="bi bi-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive ml-tabla-contenedor">
+                <table class="table table-sm table-hover align-middle mb-0 ml-tabla">
+                    <thead class="sticky-top">
+                    <tr>
+                        <th>Publicación / variante</th>
+                        <th class="text-end">Stock</th>
+                        <th>Stock origen</th>
+                        <th>SKU ML</th>
+                        <th>Producto local</th>
+                        <th>SKU local</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablaMl">
+                    <tr><td colspan="8" class="text-center text-muted py-4">Conectá la cuenta e importá el inventario.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="modal fade" id="modalResultadoImportacionMl" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title d-flex align-items-center gap-2">
+                    <i id="iconoResultadoImportacionMl" class="bi bi-check-circle-fill text-success"></i>
+                    <span id="tituloResultadoImportacionMl">Importación finalizada</span>
+                </h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="mensajeResultadoImportacionMl" class="text-muted">El inventario quedó actualizado.</p>
+                <div class="row g-2">
+                    <div class="col-6"><div class="border rounded p-2"><small class="text-muted d-block">Publicaciones</small><strong id="resultadoPublicacionesMl">0</strong></div></div>
+                    <div class="col-6"><div class="border rounded p-2"><small class="text-muted d-block">Registros en inventario</small><strong id="resultadoRegistrosMl">0</strong></div></div>
+                    <div class="col-6"><div class="border rounded p-2"><small class="text-muted d-block">Con stock publicado</small><strong id="resultadoConStockMl">0</strong></div></div>
+                    <div class="col-6"><div class="border rounded p-2"><small class="text-muted d-block">Sin stock publicado</small><strong id="resultadoSinStockMl">0</strong></div></div>
+                    <div class="col-6"><div class="border rounded p-2"><small class="text-muted d-block">Stock no informado</small><strong id="resultadoStockNoInformadoMl">0</strong></div></div>
+                    <div class="col-6"><div class="border rounded p-2"><small class="text-muted d-block">Errores</small><strong id="resultadoErroresMl">0</strong></div></div>
+                    <div class="col-6"><div class="border rounded p-2"><small class="text-muted d-block">Tiempo total</small><strong id="resultadoDuracionMl">0:00</strong></div></div>
+                </div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalVincular" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Vincular variante con producto local</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="detalleMl" class="alert alert-info"></div>
+                <div class="alert alert-warning small">
+                    <i class="bi bi-shield-check"></i> Ninguna vinculación se aplica automáticamente. El operador debe confirmar el producto elegido.
+                </div>
+                <div class="input-group mb-3">
+                    <input id="txtBuscarProductoMl" class="form-control" placeholder="Buscar por ID, SKU, código, descripción, marca, color o talle">
+                    <button id="btnBuscarProductoMl" class="btn btn-primary"><i class="bi bi-search"></i> Buscar</button>
+                </div>
+                <div class="list-group" id="listaProductosMl"><div class="text-center text-muted py-3">Ingresá un criterio de búsqueda.</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/config.js?v=0.26.0"></script>
+<script src="js/api.js?v=0.26.0"></script>
+<script src="js/seguridad.js?v=0.26.0"></script>
+<script src="js/mensajes.js"></script>
+<script src="js/navegacion.js?v=0.26.0"></script>
+<script src="js/mercadoLibre.js?v=0.26.0-rc4.3"></script>
+</body>
+</html>

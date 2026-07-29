@@ -1,0 +1,26 @@
+.alta-rapida-main { max-width: 1320px; }
+.alta-rapida-card .card-body { padding: 1.4rem; }
+.alta-rapida-card .form-label { font-weight: 600; }
+.alta-rapida-card input { text-transform: uppercase; }
+.alta-rapida-card #descripcion { text-transform: none; }
+.defaults-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: .85rem 1rem;
+  border: 1px dashed var(--bs-border-color);
+  border-radius: .6rem;
+  background: var(--bs-tertiary-bg);
+}
+.shortcut-label { font-size: .72em; opacity: .8; margin-left: .3rem; }
+#tablaUltimos td, #tablaUltimos th { white-space: nowrap; }
+.campo-guardado { animation: destelloGuardado .65s ease; }
+@keyframes destelloGuardado {
+  0% { box-shadow: 0 0 0 .25rem rgba(25,135,84,.28); }
+  100% { box-shadow: none; }
+}
+@media (max-width: 767px) {
+  .defaults-panel { align-items: flex-start; flex-direction: column; }
+  .alta-rapida-card .card-body { padding: 1rem; }
+}

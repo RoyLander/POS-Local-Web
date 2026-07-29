@@ -33,6 +33,27 @@ const Navegacion = {
             archivo: "productos.html"
         },
         {
+            id: "altaRapidaProductos",
+            permiso: "pagina.altaRapidaProductos",
+            texto: "Alta rápida",
+            icono: "bi-lightning-charge",
+            archivo: "alta-rapida-productos.html"
+        },
+        {
+            id: "auditoriaSku",
+            permiso: "pagina.auditoriaSku",
+            texto: "Auditoría de SKU",
+            icono: "bi-upc-scan",
+            archivo: "auditoria-sku.html"
+        },
+        {
+            id: "mercadoLibre",
+            permiso: "pagina.mercadoLibre",
+            texto: "Mercado Libre",
+            icono: "bi-shop-window",
+            archivo: "mercado-libre.html"
+        },
+        {
             id: "cargaMasivaProductos",
             permiso: "pagina.cargaMasivaProductos",
             texto: "Carga masiva",
@@ -178,6 +199,9 @@ const Navegacion = {
                                 "bi-boxes",
                                 [
                                     "productos",
+                                    "altaRapidaProductos",
+                                    "auditoriaSku",
+                                    "mercadoLibre",
                                     "maestros",
                                     "inventario",
                                     "cargaMasivaProductos",
