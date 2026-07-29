@@ -33,7 +33,7 @@
 
     global.CONFIG = Object.freeze({
         EMPRESA: "APRILE",
-        VERSION: "0.23.0-RC1.1",
+        VERSION: "0.26.0",
         AMBIENTE: AMBIENTE_ACTIVO,
         NOMBRE_SISTEMA: "POS Local",
         API: ambiente.API
